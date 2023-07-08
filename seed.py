@@ -1,12 +1,13 @@
-from app import app
 from models import db, User
+from app import app
 
+# Create all tables
 db.drop_all()
 db.create_all()
 
 user_no_image = User(
     first_name="Claudia",
-    last_name="lam",
+    last_name="Lam",
 )
 
 user_with_image = User(

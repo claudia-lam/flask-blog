@@ -34,7 +34,7 @@ class User(db.Model):
         nullable=False)
 
     image_url = db.Column(
-        db.String(100),
+        db.Text,
         nullable=False,
         default="https://cdn5.vectorstock.com/i/1000x1000/45/79/male-avatar-profile-picture-silhouette-light-vector-4684579.jpg"
     )
