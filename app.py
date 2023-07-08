@@ -2,7 +2,7 @@
 
 import os
 
-from flask import Flask
+from flask import Flask, redirect, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 
@@ -16,3 +16,18 @@ connect_db(app)
 
 app.config['SECRET_KEY'] = "SECRET!"
 debug = DebugToolbarExtension(app)
+
+
+@app.get("/")
+def display_home():
+    """Redirect to list of users."""
+    return redirect("/users")
+
+
+@app.get("/users")
+def list_users():
+    """Show all users."""
+
+    users = User.query.all()
+
+    return render_template("users.html", users=users)
