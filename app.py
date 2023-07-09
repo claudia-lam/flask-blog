@@ -2,7 +2,7 @@
 
 import os
 
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 
@@ -38,3 +38,20 @@ def show_add_form():
     """Show an add form for users."""
 
     return render_template("new_user_form.html")
+
+
+@app.post("/users/new")
+def add_user():
+    """Process the add form, adding a new user and going back to /users."""
+
+    first_name = request.form['fname']
+    last_name = request.form['lname']
+    image_url = request.form['imgurl']
+
+    new_user = User(first_name=first_name,
+                    last_name=last_name, image_url=image_url)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect("/users")
