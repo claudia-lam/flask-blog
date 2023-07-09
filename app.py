@@ -31,3 +31,10 @@ def list_users():
     users = User.query.all()
 
     return render_template("users.html", users=users)
+
+
+@app.get("/users/new")
+def show_add_form():
+    """Show an add form for users."""
+
+    return render_template("new_user_form.html")

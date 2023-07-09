@@ -1,0 +1,12 @@
+{% block content %}
+<h1>Create a User</h1>
+<form action="/users/new" method="post">
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname"><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname"><br>
+  <label for="imgurl">Image URL:</label><br>
+  <input type="text" id="imgurl" name="imgurl"><br>
+  <input type="submit" value="Add">
+</form>
+{% endblock %}
