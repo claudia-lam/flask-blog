@@ -67,5 +67,9 @@ def show_user_detail(user_id):
 
 
 @app.get("/users/<int:user_id>/edit")
-def show_edit_form():
+def show_edit_form(user_id):
     """Show the edit page for a user."""
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template("edit_user_form.html", user=user)
