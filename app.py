@@ -73,3 +73,24 @@ def show_edit_form(user_id):
     user = User.query.get_or_404(user_id)
 
     return render_template("edit_user_form.html", user=user)
+
+
+@app.post("/users/<int:user_id>/edit")
+def edit_user(user_id):
+    """Process the edit form, returning the user to the /users page."""
+
+    user = User.query.get(user_id)
+    print("user", user)
+
+    user.first_name = request.form['fname'] or user.first_name
+    user.last_name = request.form['lname'] or user.last_name
+    user.image_url = request.form['imgurl'] or user.image_url
+
+    db.session.commit()
+
+    return redirect("/users")
+
+
+@app.post("/users/<int:user_id>/delete")
+def delete_user(user_id):
+    """Delete the user."""
