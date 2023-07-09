@@ -2,10 +2,8 @@
 <h1>Users</h1>
 <ul>
   {% for user in users %}
-  <!-- TODO: add link to user detail page -->
-  <a href=""></a><li>{{user.first_name}} {{user.last_name}}</li>
+  <a href="/users/{{user.id}}"><li>{{user.first_name}} {{user.last_name}}</li></a>
   {% endfor %}
 </ul>
-<!-- TODO: add url for create user form -->
 <a href="/users/new"><button>Add User</button></a>
 {% endblock %}
