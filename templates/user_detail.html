@@ -1,3 +1,12 @@
 {% block content %}
-TODO: add contents to user detail page
+<h1>{{user.first_name}} {{user.last_name}}</h1>
+<div class="grid text-center">
+  <div class="col-4">
+    <img src="{{user.image_url}}" class="img-thumbnail" alt="a face">
+  </div>
+  <!-- TODO: add link to edit  -->
+  <button><a href="">Edit</a></button>
+  <!-- TODO: add link to delete  -->
+  <button><a href="">Delete</a></button>
+</div>
 {% endblock %}
