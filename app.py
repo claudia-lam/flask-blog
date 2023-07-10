@@ -46,7 +46,7 @@ def add_user():
 
     first_name = request.form['fname']
     last_name = request.form['lname']
-    image_url = request.form['imgurl']
+    image_url = request.form['imgurl'] if request.form['imgurl'] else None
 
     new_user = User(first_name=first_name,
                     last_name=last_name, image_url=image_url)
