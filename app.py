@@ -95,6 +95,7 @@ def edit_user(user_id):
 def delete_user(user_id):
     """Delete the user."""
 
+    print("does it get here?")
     user = User.query.get(user_id)
     print("user", user)
     user.query.delete()
