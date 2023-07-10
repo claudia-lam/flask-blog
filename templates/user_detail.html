@@ -5,7 +5,6 @@
     <img src="{{user.image_url}}" class="img-thumbnail" alt="a face">
   </div>
   <button><a href="/users/{{user.id}}/edit">Edit</a></button>
-  <!-- TODO: add link to delete  -->
-  <button><a href="">Delete</a></button>
+  <button><a href="/users/{{user.id}}/delete">Delete</a></button>
 </div>
 {% endblock %}
