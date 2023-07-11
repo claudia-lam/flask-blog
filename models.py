@@ -3,6 +3,8 @@
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
+DEFAULT_IMAGE_URL = "https://cdn5.vectorstock.com/i/1000x1000/45/79/male-avatar-profile-picture-silhouette-light-vector-4684579.jpg"
+
 
 def connect_db(app):
     """Connect this database to provided Flask app.
@@ -36,5 +38,5 @@ class User(db.Model):
     image_url = db.Column(
         db.Text,
         nullable=False,
-        default="https://cdn5.vectorstock.com/i/1000x1000/45/79/male-avatar-profile-picture-silhouette-light-vector-4684579.jpg"
+        default=DEFAULT_IMAGE_URL
     )
