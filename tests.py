@@ -93,3 +93,12 @@ class UserViewTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>test1_first test1_last</h1>", html)
+
+    def test_show_edit_form(self):
+        with self.client as c:
+            resp = c.get(f"/users/{self.user_id}/edit")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("""<input type="text" id="fname" name="fname" value="test1_first"><br>
+""", html)
