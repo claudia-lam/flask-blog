@@ -69,7 +69,6 @@ class UserViewTestCase(TestCase):
             self.assertIn("""<label for="lname">""", html)
 
     def test_add_user(self):
-        print("does it get here?")
         with self.client as c:
             resp = c.post("/users/new", data={
                 'fname': "test2_first",
@@ -86,3 +85,11 @@ class UserViewTestCase(TestCase):
             # test if we are redirecting to /users
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<li>test2_first test2_last</li>", html)
+
+    def test_show_user_detail(self):
+        with self.client as c:
+            resp = c.get(f"/users/{self.user_id}")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>test1_first test1_last</h1>", html)
