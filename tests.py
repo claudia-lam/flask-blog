@@ -102,3 +102,15 @@ class UserViewTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("""<input type="text" id="fname" name="fname" value="test1_first"><br>
 """, html)
+
+    def test_edit_user(self):
+        with self.client as c:
+            resp = c.post(f"/users/{self.user_id}/edit", data={
+                'fname': "test1_first_updated",
+                'lname': "test1_last",
+                'imgurl': DEFAULT_IMAGE_URL
+            }, follow_redirects=True)
+
+            # check if first name is updated
+            user = User.query.get(self.user_id)
+            self.assertEqual(user.first_name, "test1_first_updated")
