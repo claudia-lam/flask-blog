@@ -114,3 +114,11 @@ class UserViewTestCase(TestCase):
             # check if first name is updated
             user = User.query.get(self.user_id)
             self.assertEqual(user.first_name, "test1_first_updated")
+
+    def test_delete_user(self):
+        with self.client as c:
+            resp = c.post(f"/users/{self.user_id}/delete")
+
+            user = User.query.get(self.user_id)
+            self.assertEqual(user, None)
+            self.assertEqual(resp.status_code, 302)
