@@ -69,12 +69,20 @@ class UserViewTestCase(TestCase):
             self.assertIn("""<label for="lname">""", html)
 
     def test_add_user(self):
+        print("does it get here?")
         with self.client as c:
             resp = c.post("/users/new", data={
                 'fname': "test2_first",
                 'lname': "test2_last",
-                'imgurl': None,
-            })
+                'imgurl': "",
+            }, follow_redirects=True)
+            html = resp.text
 
             # test if it is in the database
+            new_user = User.query.filter(
+                User.first_name == "test2_first").one_or_none()
+            self.assertTrue(new_user)
+
             # test if we are redirecting to /users
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<li>test2_first test2_last</li>", html)
