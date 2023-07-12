@@ -96,7 +96,6 @@ def delete_user(user_id):
     """Delete the user."""
 
     user = User.query.get(user_id)
-    print("user", user)
     db.session.delete(user)
 
     # User.query.filter(User.id == user_id).delete()
