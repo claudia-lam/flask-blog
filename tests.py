@@ -1,4 +1,4 @@
-from models import DEFAULT_IMAGE_URL, User
+from models import DEFAULT_IMAGE_URL, User, Post
 from app import app, db
 from unittest import TestCase
 import os
@@ -122,3 +122,39 @@ class UserViewTestCase(TestCase):
             user = User.query.get(self.user_id)
             self.assertEqual(user, None)
             self.assertEqual(resp.status_code, 302)
+
+######################### POSTS ################################################
+
+
+class PostViewTestCase(TestCase):
+    """Test views for posts"""
+
+    def setUp(self):
+        """Create test client, add sample data."""
+
+        # As you add more models later in the exercise, you'll want to delete
+        # all of their records before each test just as we're doing with the
+        # User model below.
+        Post.query.delete()
+
+        self.client = app.test_client()
+
+        test_post = Post(
+            title="test1_title",
+            contente="test1_content",
+            created_at=None,
+            user_id=1
+        )
+
+        db.session.add(test_post)
+        db.session.commit()
+
+        # We can hold onto our test_post's id by attaching it to self (which is
+        # accessible throughout this test class). This way, we'll be able to
+        # rely on this user in our tests without needing to know the numeric
+        # value of their id, since it will change each time our tests are run.
+        self.post_id = test_post.id
+
+    def tearDown(self):
+        """Clean up any fouled transaction."""
+        db.session.rollback()
