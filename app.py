@@ -108,6 +108,10 @@ def delete_user(user_id):
 
 ############################# Posts #############################################
 
-@app.get("/users/<id:user_id>/posts/new")
+@app.get("/users/<int:user_id>/posts/new")
 def show_new_post_form(user_id):
     """Show form to add a post for that user."""
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template('posts/new_post.html', user=user)
