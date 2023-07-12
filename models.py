@@ -45,3 +45,38 @@ class User(db.Model):
         """get full name. """
 
         return f"{self.first_name} {self.last_name}"
+
+    posts = db.relationship('Post', backref='user')
+
+
+class Post(db.Model):
+    """Model for blog posts."""
+
+    __tablename__ = "posts"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+        autoincrement=True
+    )
+
+    title = db.Column(
+        db.String(50),
+        nullable=False
+    )
+
+    content = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=db.func.now()
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('User.id')
+    )
