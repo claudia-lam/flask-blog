@@ -139,14 +139,20 @@ class PostViewTestCase(TestCase):
 
         self.client = app.test_client()
 
+        test_user = User(
+            first_name="test1_first",
+            last_name="test1_last",
+            image_url=None,
+        )
+
         test_post = Post(
             title="test1_title",
             contente="test1_content",
             created_at=None,
-            user_id=1
+            user_id=1  # TODO: don't know if this will work? Where do I get the ID?
         )
 
-        db.session.add(test_post)
+        db.session.add(test_post, test_user)
         db.session.commit()
 
         # We can hold onto our test_post's id by attaching it to self (which is
@@ -154,7 +160,16 @@ class PostViewTestCase(TestCase):
         # rely on this user in our tests without needing to know the numeric
         # value of their id, since it will change each time our tests are run.
         self.post_id = test_post.id
+        self.user_id = test_user.id
 
     def tearDown(self):
         """Clean up any fouled transaction."""
         db.session.rollback()
+
+    def test_show_new_post_form(self):
+        with self.client as c:
+            resp = c.get(f"/users/{self.user_id}/posts/new")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("test1_first", html)

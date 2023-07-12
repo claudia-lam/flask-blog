@@ -24,6 +24,8 @@ def display_home():
     return redirect("/users")
 
 
+############################# Users #############################################
+
 @app.get("/users")
 def list_users():
     """Show all users."""
@@ -102,3 +104,10 @@ def delete_user(user_id):
     db.session.commit()
 
     return redirect("/users")
+
+
+############################# Posts #############################################
+
+@app.get("/users/<id:user_id>/posts/new")
+def show_new_post_form(user_id):
+    """Show form to add a post for that user."""
