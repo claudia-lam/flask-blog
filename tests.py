@@ -210,3 +210,12 @@ class PostViewTestCase(TestCase):
             self.assertIn('<p>By test1_first test1_last</p>', html)
 
             # TODO: add tests for cancel, edit and delete button
+
+    def test_edit_post(self):
+        with self.client as c:
+            resp = c.get(f"/posts/{self.post_id}/edit")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("test1_title", html)
+            self.assertIn("test1_content", html)
