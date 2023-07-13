@@ -234,3 +234,13 @@ class PostViewTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("test1_title_edited", html)
             self.assertIn("test1_content_edited", html)
+
+    def test_delete_post(self):
+        with self.client as c:
+            resp = c.post(f"/posts/{self.post_id}/delete",
+                          follow_redirects=True)
+
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertNotIn("test1_title", html)
