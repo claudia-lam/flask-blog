@@ -219,3 +219,18 @@ class PostViewTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("test1_title", html)
             self.assertIn("test1_content", html)
+
+            # TODO: add tests for cancel and edit button
+
+    def test_handle_edit_post(self):
+        with self.client as c:
+            resp = c.post(f"/posts/{self.post_id}/edit", data={
+                "title": "test1_title_edited",
+                "content": "test1_content_edited"
+            }, follow_redirects=True)
+
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("test1_title_edited", html)
+            self.assertIn("test1_content_edited", html)
