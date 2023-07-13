@@ -199,3 +199,12 @@ class PostViewTestCase(TestCase):
             self.assertIn('<li>A new post title</li>', html)
             self.assertIn(
                 '<input type="submit" id="add" value="Add Post">', html)
+
+    def test_show_post(self):
+        with self.client as c:
+            resp = c.get(f"/posts/{self.post_id}")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('<h1>test1_title</h1>', html)
+            self.assertIn('<p>By test1_first test1_last</p>', html)
