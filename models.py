@@ -41,9 +41,8 @@ class User(db.Model):
         default=DEFAULT_IMAGE_URL
     )
 
-    @property
-    def full_name(self):
-        """return get full name. """
+    def get_full_name(self):
+        """get full name. """
 
         return f"{self.first_name} {self.last_name}"
 
@@ -81,3 +80,9 @@ class Post(db.Model):
         db.Integer,
         db.ForeignKey('users.id')
     )
+
+    @property
+    def friendly_date(self):
+        """Return nicely-formatted date."""
+
+        return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")

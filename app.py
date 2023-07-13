@@ -5,6 +5,7 @@ import os
 from flask import Flask, redirect, render_template, request
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User, Post
+from sqlalchemy import desc
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
@@ -20,8 +21,11 @@ debug = DebugToolbarExtension(app)
 
 @app.get("/")
 def display_home():
-    """Redirect to list of users."""
-    return redirect("/users")
+    """Displays 5 most recent posts. """
+
+    top_five_posts = Post.query.order_by(desc('created_at')).limit(5)
+
+    return render_template("posts/homepage.html", posts=top_five_posts)
 
 
 ############################# Users #############################################
