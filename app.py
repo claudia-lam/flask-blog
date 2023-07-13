@@ -153,3 +153,17 @@ def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
 
     return render_template('posts/post_edit.html', post=post)
+
+
+@app.post("/posts/<int:post_id>/edit")
+def handle_edit_post(post_id):
+    """Handle editing of a post. Redirect back to the post view."""
+
+    post = Post.query.get_or_404(post_id)
+
+    post.title = request.form['title']
+    post.content = request.form['content']
+
+    db.session.commit()
+
+    return redirect(f"/posts/{post_id}")
