@@ -144,3 +144,8 @@ def show_post(post_id):
     post = Post.query.get_or_404(post_id)
 
     return render_template('/posts/post_detail.html', post=post)
+
+
+@app.get("/posts/<int:post_id>/edit")
+def edit_post(post_id):
+    """Show form to edit a post, and to cancel back to user page."""
