@@ -167,3 +167,8 @@ def handle_edit_post(post_id):
     db.session.commit()
 
     return redirect(f"/posts/{post_id}")
+
+
+@app.post("/posts/<int:post_id>/delete")
+def delete_post(post_id):
+    """Delete the post."""
