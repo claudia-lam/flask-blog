@@ -104,3 +104,23 @@ class Tag(db.Model):
         unique=True,
         nullable=False
     )
+
+
+class PostTag(db.Model):
+    """Model that joins together a Post and a Tag. """
+
+    __tablename__ = "posts_tags"
+
+    post_id = db.Column(
+        db.Integer,
+        db.ForeignKey("posts.id"),
+        nullable=False,
+        primary_key=True
+    )
+
+    tag_id = db.Column(
+        db.Integer,
+        db.ForeignKey("tags.id"),
+        nullable=False,
+        primary_key=True
+    )
