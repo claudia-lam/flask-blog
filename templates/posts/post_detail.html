@@ -4,4 +4,7 @@
 <p>{{post.content}}</p>
 <p>By {{post.user.full_name}}</p>
 <!-- TODO: add cancel, edit, and delete button -->
+<form action="/posts/{{post.id}}/edit" method="get">
+  <input type="submit" value="Edit">
+</form>
 {% endblock %}
