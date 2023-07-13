@@ -9,6 +9,8 @@
   <textarea type="text" id="content" name="content">{{post.content}}</textarea>
   <input type="submit" id="add" value="Edit">
 </form>
-<!-- TODO: add a cancel button -->
+<form action="/users/{{post.user_id}}" method="get">
+<input type="submit" value="Cancel">
+</form>
 {% endblock %}
 
