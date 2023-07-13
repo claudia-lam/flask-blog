@@ -197,3 +197,5 @@ class PostViewTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<li>A new post title</li>', html)
+            self.assertIn(
+                '<input type="submit" id="add" value="Add Post">', html)
