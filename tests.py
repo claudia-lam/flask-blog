@@ -182,8 +182,18 @@ class PostViewTestCase(TestCase):
             resp = c.get(f"/users/{self.user_id}/posts/new")
             html = resp.text
 
-            print("USER ID", self.user_id)
-            print("POST ID", self.post_id)
-
             self.assertEqual(resp.status_code, 200)
             self.assertIn("test1_first", html)
+            self.assertIn("Add", html)
+
+    def test_handle_new_post(self):
+        with self.client as c:
+            resp = c.post(f"/users/{self.user_id}/posts/new", data={
+                'title': "A new post title",
+                'content': "some new content"
+            }, follow_redirects=True)
+
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('<li>A new post title</li>', html)
