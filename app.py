@@ -135,3 +135,12 @@ def handle_new_post(user_id):
     db.session.commit()
 
     return redirect(f"/users/{user_id}")
+
+
+@app.get("/posts/<int:post_id>")
+def show_post(post_id):
+    """Shows a post and shows edit/delete buttons. """
+
+    post = Post.query.get_or_404(post_id)
+
+    return render_template('/posts/post_detail.html', post=post)
