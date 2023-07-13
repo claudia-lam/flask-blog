@@ -4,7 +4,7 @@ import os
 
 from flask import Flask, redirect, render_template, request
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
@@ -65,7 +65,10 @@ def show_user_detail(user_id):
 
     user = User.query.get_or_404(user_id)
 
-    return render_template("user_detail.html", user=user)
+    print("user-id", user.id)
+    print("posts-in-user-detail", user.posts)
+
+    return render_template("user_detail.html", user=user, posts=user.posts)
 
 
 @app.get("/users/<int:user_id>/edit")
@@ -114,4 +117,21 @@ def show_new_post_form(user_id):
 
     user = User.query.get_or_404(user_id)
 
+    # TODO: add a delete button to html
     return render_template('posts/new_post.html', user=user)
+
+
+@app.post("/users/<int:user_id>/posts/new")
+def handle_new_post(user_id):
+    """Handle add form; add post and redirect to the user detail page."""
+
+    # title = request['title']
+    # content = request['content']
+
+    new_post = Post(title=request.form['title'],
+                    content=request.form['content'], user_id=user_id)
+
+    db.session.add(new_post)
+    db.session.commit()
+
+    return redirect(f"/users/{user_id}")
