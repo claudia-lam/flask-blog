@@ -172,3 +172,11 @@ def handle_edit_post(post_id):
 @app.post("/posts/<int:post_id>/delete")
 def delete_post(post_id):
     """Delete the post."""
+
+    post = Post.query.get_or_404(post_id)
+    user_id = post.user_id
+
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect(f"/users/{user_id}")
