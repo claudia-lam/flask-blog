@@ -208,3 +208,5 @@ class PostViewTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<h1>test1_title</h1>', html)
             self.assertIn('<p>By test1_first test1_last</p>', html)
+
+            # TODO: add tests for cancel, edit and delete button
