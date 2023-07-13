@@ -86,3 +86,21 @@ class Post(db.Model):
         """Return nicely-formatted date."""
 
         return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
+
+
+class Tag(db.Model):
+    """Model for tags."""
+
+    __tablename__ = "tags"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+        autoincrement=True
+    )
+
+    name = db.Column(
+        db.String(25),
+        unique=True,
+        nullable=False
+    )
