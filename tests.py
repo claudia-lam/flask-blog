@@ -29,6 +29,7 @@ class UserViewTestCase(TestCase):
         # As you add more models later in the exercise, you'll want to delete
         # all of their records before each test just as we're doing with the
         # User model below.
+        Post.query.delete()
         User.query.delete()
 
         self.client = app.test_client()
@@ -47,6 +48,7 @@ class UserViewTestCase(TestCase):
         # rely on this user in our tests without needing to know the numeric
         # value of their id, since it will change each time our tests are run.
         self.user_id = test_user.id
+        # print("test-1-user-id", self.user_id)
 
     def tearDown(self):
         """Clean up any fouled transaction."""
@@ -136,6 +138,7 @@ class PostViewTestCase(TestCase):
         # all of their records before each test just as we're doing with the
         # User model below.
         Post.query.delete()
+        User.query.delete()
 
         self.client = app.test_client()
 
@@ -145,22 +148,30 @@ class PostViewTestCase(TestCase):
             image_url=None,
         )
 
+        db.session.add(test_user)
+        db.session.commit()
+
+        self.user_id = test_user.id
+
         test_post = Post(
             title="test1_title",
-            contente="test1_content",
+            content="test1_content",
             created_at=None,
-            user_id=1  # TODO: don't know if this will work? Where do I get the ID?
+            user_id=self.user_id
         )
 
-        db.session.add(test_post, test_user)
+        db.session.add(test_post)
         db.session.commit()
+
+        # print("test-user", test_user.id)
 
         # We can hold onto our test_post's id by attaching it to self (which is
         # accessible throughout this test class). This way, we'll be able to
         # rely on this user in our tests without needing to know the numeric
         # value of their id, since it will change each time our tests are run.
         self.post_id = test_post.id
-        self.user_id = test_user.id
+        print("outer-post-id", self.post_id)
+        print("self-user-id", self.user_id)
 
     def tearDown(self):
         """Clean up any fouled transaction."""
@@ -170,6 +181,9 @@ class PostViewTestCase(TestCase):
         with self.client as c:
             resp = c.get(f"/users/{self.user_id}/posts/new")
             html = resp.text
+
+            print("USER ID", self.user_id)
+            print("POST ID", self.post_id)
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("test1_first", html)
