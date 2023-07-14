@@ -326,3 +326,11 @@ class TagViewTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<li>test_tag</li>', html)
             self.assertIn('Add Tag', html)
+
+    def test_show_new_tag_form(self):
+        with self.client as c:
+            resp = c.get("/tags/new")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('Create a Tag', html)
