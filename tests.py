@@ -355,3 +355,11 @@ class TagViewTestCase(TestCase):
             self.assertIn("test_tag", html)
             # check if related post is rendered
             self.assertIn("test1_title", html)
+
+    def test_show_edit_tag_form(self):
+        with self.client as c:
+            resp = c.get(f"/tags/{self.tag_id}/edit")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("Edit a Tag", html)
