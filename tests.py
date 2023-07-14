@@ -314,8 +314,12 @@ class TagViewTestCase(TestCase):
             post_id=self.post_id,
             tag_id=self.tag_id
         )
+        test_post_tag_2 = PostTag(
+            post_id=self.post_id,
+            tag_id=self.tag_2_id
+        )
 
-        db.session.add(test_post_tag)
+        db.session.add_all([test_post_tag, test_post_tag_2])
         db.session.commit()
 
         print("outer-post-id", self.post_id)
