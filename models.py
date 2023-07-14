@@ -41,7 +41,8 @@ class User(db.Model):
         default=DEFAULT_IMAGE_URL
     )
 
-    def get_full_name(self):
+    @property
+    def full_name(self):
         """get full name. """
 
         return f"{self.first_name} {self.last_name}"
