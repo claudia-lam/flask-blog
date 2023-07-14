@@ -334,3 +334,15 @@ class TagViewTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Create a Tag', html)
+
+    def test_handle_new_tag(self):
+        with self.client as c:
+            resp = c.post("/tags/new", data={
+                'name': 'test_new_tag'
+            }, follow_redirects=True)
+
+            html = resp.text
+            print("html", html)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("test_new_tag", html)
