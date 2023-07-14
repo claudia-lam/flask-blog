@@ -214,3 +214,13 @@ def handle_new_tag():
     db.session.commit()
 
     return redirect("/tags")
+
+
+@app.get("/tags/<int:tag_id>")
+def show_tag_detail(tag_id):
+    """Show detail about a tag. """
+
+    tag = Tag.query.get_or_404(tag_id)
+    posts = tag.posts
+
+    return render_template('tags/detail.html', tag=tag, posts=posts)
