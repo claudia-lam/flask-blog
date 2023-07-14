@@ -375,3 +375,11 @@ class TagViewTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('an updated tag', html)
             self.assertNotIn('test_tag', html)
+
+    def test_delete_tag(self):
+        with self.client as c:
+            resp = c.post(f"/tags/{self.tag_id}/delete", follow_redirects=True)
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertNotIn('test_tag', html)
