@@ -233,3 +233,17 @@ def show_edit_tag_form(tag_id):
     tag = Tag.query.get_or_404(tag_id)
 
     return render_template('tags/edit.html', tag=tag)
+
+
+@app.post("/tags/<int:tag_id>/edit")
+def handle_edit_tag(tag_id):
+    """Handle tag edit. Redirect to tag list. """
+
+    tag = Tag.query.get_or_404(tag_id)
+
+    tag.name = request.form['name']
+
+    # db.session.add(tag)
+    db.session.commit()
+
+    return redirect("/tags")
