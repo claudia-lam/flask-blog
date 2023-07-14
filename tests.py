@@ -1,4 +1,4 @@
-from models import DEFAULT_IMAGE_URL, User, Post
+from models import DEFAULT_IMAGE_URL, User, Post, Tag, PostTag
 from app import app, db
 from unittest import TestCase
 import os
@@ -29,6 +29,8 @@ class UserViewTestCase(TestCase):
         # As you add more models later in the exercise, you'll want to delete
         # all of their records before each test just as we're doing with the
         # User model below.
+        PostTag.query.delete()
+        Tag.query.delete()
         Post.query.delete()
         User.query.delete()
 
@@ -137,6 +139,8 @@ class PostViewTestCase(TestCase):
         # As you add more models later in the exercise, you'll want to delete
         # all of their records before each test just as we're doing with the
         # User model below.
+        PostTag.query.delete()
+        Tag.query.delete()
         Post.query.delete()
         User.query.delete()
 
@@ -244,3 +248,81 @@ class PostViewTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertNotIn("test1_title", html)
+
+
+######################### TAGS ################################################
+
+class TagViewTestCase(TestCase):
+    """Test views for tags"""
+
+    def setUp(self):
+        """Create test client, add sample data."""
+
+        # As you add more models later in the exercise, you'll want to delete
+        # all of their records before each test just as we're doing with the
+        # User model below.
+
+        PostTag.query.delete()
+        Tag.query.delete()
+        Post.query.delete()
+        User.query.delete()
+
+        self.client = app.test_client()
+
+        test_user = User(
+            first_name="test1_first",
+            last_name="test1_last",
+            image_url=None,
+        )
+
+        db.session.add(test_user)
+        db.session.commit()
+
+        self.user_id = test_user.id
+
+        test_post = Post(
+            title="test1_title",
+            content="test1_content",
+            created_at=None,
+            user_id=self.user_id
+        )
+
+        db.session.add(test_post)
+        db.session.commit()
+
+        # We can hold onto our test_post's id
+        self.post_id = test_post.id
+
+        test_tag = Tag(
+            name="test_tag"
+        )
+
+        db.session.add(test_tag)
+        db.session.commit()
+
+        self.tag_id = test_tag.id
+
+        test_post_tag = PostTag(
+            post_id=self.post_id,
+            tag_id=self.tag_id
+        )
+
+        db.session.add(test_post_tag)
+        db.session.commit()
+
+        print("outer-post-id", self.post_id)
+        print("self-user-id", self.user_id)
+
+    def tearDown(self):
+        """Clean up any fouled transaction."""
+        db.session.rollback()
+
+    def test_list_tags(self):
+
+        with self.client as c:
+            resp = c.get("/tags")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('<li>test_tag</li>', html)
+            self.assertIn('Add Tag', html)
