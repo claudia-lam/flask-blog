@@ -81,6 +81,8 @@ class Post(db.Model):
         db.ForeignKey('users.id')
     )
 
+    tags = db.relationship('Tag', secondary='posts_tags', backref='posts')
+
     @property
     def friendly_date(self):
         """Return nicely-formatted date."""
