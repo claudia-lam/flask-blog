@@ -366,7 +366,7 @@ class TagViewTestCase(TestCase):
 
     def test_handle_edit_tag(self):
         with self.client as c:
-            resp = c.post("/tags/<int:tag_id>/edit", data={
+            resp = c.post(f"/tags/{self.tag_id}/edit", data={
                 'name': 'test_tag_updated'
             }, follow_redirects=True)
 
