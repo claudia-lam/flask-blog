@@ -243,7 +243,19 @@ def handle_edit_tag(tag_id):
 
     tag.name = request.form['name']
 
-    # db.session.add(tag)
+    db.session.add(tag)
+    db.session.commit()
+
+    return redirect("/tags")
+
+
+@app.post("/tags/<int:tag_id>/delete")
+def delete_tag(tag_id):
+    """Delete a tag."""
+
+    tag = Tag.query.get_or_404(tag_id)
+
+    db.session.delete(tag)
     db.session.commit()
 
     return redirect("/tags")
