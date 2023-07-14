@@ -368,7 +368,7 @@ class TagViewTestCase(TestCase):
         with self.client as c:
             resp = c.post("/tags/<int:tag_id>/edit", data={
                 'name': 'test_tag_updated'
-            }, test_redirects=True)
+            }, follow_redirects=True)
 
             html = resp.text
 
