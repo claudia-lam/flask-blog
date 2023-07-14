@@ -296,11 +296,19 @@ class TagViewTestCase(TestCase):
         test_tag = Tag(
             name="test_tag"
         )
+        test_tag_2 = Tag(
+            name="test_tag_2"
+        )
+        test_tag_3 = Tag(
+            name="test_tag_3"
+        )
 
-        db.session.add(test_tag)
+        db.session.add_all([test_tag, test_tag_2, test_tag_3])
         db.session.commit()
 
         self.tag_id = test_tag.id
+        self.tag_2_id = test_tag_2.id
+        self.tag_3_id = test_tag_3.id
 
         test_post_tag = PostTag(
             post_id=self.post_id,
