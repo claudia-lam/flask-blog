@@ -195,3 +195,10 @@ def list_tags():
     tags = Tag.query.all()
 
     return render_template('tags/all.html', tags=tags)
+
+
+@app.get("/tags/new")
+def show_new_tag_form():
+    """Show form for a new tag."""
+
+    return render_template('tags/new.html')
