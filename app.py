@@ -202,3 +202,15 @@ def show_new_tag_form():
     """Show form for a new tag."""
 
     return render_template('tags/new.html')
+
+
+@app.post("/tags/new")
+def handle_new_tag():
+    """Process add form, adds tag, and redirect to tag list."""
+
+    tag = Tag(name=request.form['name'])
+
+    db.session.add(tag)
+    db.session.commit()
+
+    return redirect("/tags")
