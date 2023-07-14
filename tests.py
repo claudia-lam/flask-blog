@@ -363,3 +363,14 @@ class TagViewTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("Edit a Tag", html)
+
+    def test_handle_edit_tag(self):
+        with self.client as c:
+            resp = c.post("/tags/<int:tag_id>/edit", data={
+                'name': 'test_tag_updated'
+            }, test_redirects=True)
+
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('test_tag_updated', html)
