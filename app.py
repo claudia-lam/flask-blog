@@ -4,7 +4,7 @@ import os
 
 from flask import Flask, redirect, render_template, request
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag, PostTag
 from sqlalchemy import desc
 
 app = Flask(__name__)
@@ -184,3 +184,14 @@ def delete_post(post_id):
     db.session.commit()
 
     return redirect(f"/users/{user_id}")
+
+
+############################# Tags #############################################
+
+@app.get("/tags")
+def list_tags():
+    """Lists all tags. """
+
+    tags = Tag.query.all()
+
+    return render_template('tags/all.html', tags=tags)
