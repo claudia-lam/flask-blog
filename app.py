@@ -224,3 +224,12 @@ def show_tag_detail(tag_id):
     posts = tag.posts
 
     return render_template('tags/detail.html', tag=tag, posts=posts)
+
+
+@app.get("/tags/<int:tag_id>/edit")
+def show_edit_tag_form(tag_id):
+    """Show form to edit a tag. """
+
+    tag = Tag.query.get_or_404(tag_id)
+
+    return render_template('tags/edit.html', tag=tag)
