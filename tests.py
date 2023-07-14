@@ -342,7 +342,16 @@ class TagViewTestCase(TestCase):
             }, follow_redirects=True)
 
             html = resp.text
-            print("html", html)
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("test_new_tag", html)
+
+    def test_show_tag_detail(self):
+        with self.client as c:
+            resp = c.get(f"/tags/{self.tag_id}")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("test_tag", html)
+            # check if related post is rendered
+            self.assertIn("test1_title", html)
