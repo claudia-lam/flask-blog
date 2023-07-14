@@ -367,10 +367,11 @@ class TagViewTestCase(TestCase):
     def test_handle_edit_tag(self):
         with self.client as c:
             resp = c.post(f"/tags/{self.tag_id}/edit", data={
-                'name': 'test_tag_updated'
+                'name': 'an updated tag'
             }, follow_redirects=True)
 
             html = resp.text
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('test_tag_updated', html)
+            self.assertIn('an updated tag', html)
+            self.assertNotIn('test_tag', html)
