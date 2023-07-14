@@ -395,3 +395,13 @@ class TagViewTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertNotIn('test_tag', html)
+
+    def test_show_new_post_form_with_tags(self):
+        with self.client as c:
+            resp = c.get(f"/users/{self.user_id}/posts/new")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("test_tag", html)
+            self.assertIn("test_tag_2", html)
+            self.assertNotIn("test_tag_3", html)
