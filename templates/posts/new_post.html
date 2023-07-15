@@ -10,7 +10,7 @@
   <input type="submit" id="add" value="Add">
   <div>
     {% for tag in tags %}
-    <input type="checkbox" id={{tag.name}} name={{tag.name}} value={{tag.name}}>
+    <input type="checkbox" id={{tag.name}} name="tag" value={{tag.name}}>
     <label for={{tag.name}}>{{tag.name}}</label><br>
     {% endfor %}
   </div>
