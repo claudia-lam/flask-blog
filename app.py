@@ -129,14 +129,28 @@ def show_new_post_form(user_id):
 def handle_new_post(user_id):
     """Handle add form; add post and redirect to the user detail page."""
 
-    # title = request['title']
-    # content = request['content']
-
     new_post = Post(title=request.form['title'],
-                    content=request.form['content'], user_id=user_id)
+                    content=request.form['content'],
+                    user_id=user_id)
 
     db.session.add(new_post)
     db.session.commit()
+
+    # add tags to database
+    tags = request.form.getlist('tag')
+
+    for tag in tags:
+        new_tag = Tag(name=tag)
+        db.session.add(new_tag)
+        db.session.commit()
+
+        # create a relationship with post
+        new_post_tag = PostTag(
+            post_id=new_post.id,
+            tag_id=new_tag.id
+        )
+        db.session.add(new_post_tag)
+        db.session.commit()
 
     return redirect(f"/users/{user_id}")
 
