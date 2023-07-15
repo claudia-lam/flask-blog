@@ -136,21 +136,20 @@ def handle_new_post(user_id):
     db.session.add(new_post)
     db.session.commit()
 
-    # add tags to database
+    # create a relationship with post
     tags = request.form.getlist('tag')
 
     for tag in tags:
-        new_tag = Tag(name=tag)
-        db.session.add(new_tag)
-        db.session.commit()
+        tag_in_db = Tag.query.filter(Tag.name == tag)
 
-        # create a relationship with post
         new_post_tag = PostTag(
             post_id=new_post.id,
-            tag_id=new_tag.id
+            tag_id=tag_in_db.id
         )
+
         db.session.add(new_post_tag)
         db.session.commit()
+        print("TAG RELATIONS:", PostTag.query.all())
 
     return redirect(f"/users/{user_id}")
 
