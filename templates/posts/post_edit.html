@@ -14,7 +14,7 @@
     type="text"
     id="content"
     name="content">{{post.content}}</textarea>
-
+    <br>
    {% for tag in post_tags %}
    <input type="checkbox" id={{tag.name}} name="tag" value={{tag.name}} checked>
    <label for={{tag.name}}>{{tag.name}}</label><br>
