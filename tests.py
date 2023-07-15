@@ -442,6 +442,8 @@ class TagViewTestCase(TestCase):
     def test_handle_edit_post_with_tags(self):
         with self.client as c:
             resp = c.post(f"/posts/{self.post_id}/edit", data={
+                'title': "A new post title",
+                'content': "some new content",
                 "tag": ["test_tag_3"]
             }, follow_redirects=True)
 
