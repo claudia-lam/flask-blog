@@ -169,7 +169,15 @@ def edit_post(post_id):
 
     post = Post.query.get_or_404(post_id)
 
-    return render_template('posts/post_edit.html', post=post)
+    all_tags = Tag.query.all()
+
+    post_tags = post.tags
+    other_tags = list(set(all_tags+post_tags))
+
+    return render_template('posts/post_edit.html',
+                           post=post,
+                           post_tags=post_tags,
+                           other_tags=other_tags)
 
 
 @app.post("/posts/<int:post_id>/edit")
