@@ -170,9 +170,14 @@ def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
 
     all_tags = Tag.query.all()
-
+    print("ALL TAGS", all_tags)
     post_tags = post.tags
-    other_tags = list(set(all_tags+post_tags))
+    print("POST TAGS", post_tags)
+
+    print("PLUS", all_tags+post_tags)
+
+    other_tags = [tag for tag in all_tags if tag not in post_tags]
+    print("OTHER TAGS", other_tags)
 
     return render_template('posts/post_edit.html',
                            post=post,
