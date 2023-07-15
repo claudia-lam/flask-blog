@@ -149,18 +149,18 @@ def handle_new_post(user_id):
 
         db.session.add(new_post_tag)
         db.session.commit()
-        print("TAG RELATIONS:", PostTag.query.all())
 
     return redirect(f"/users/{user_id}")
 
 
 @app.get("/posts/<int:post_id>")
 def show_post(post_id):
-    """Shows a post and shows edit/delete buttons. """
+    """Shows a post with tags and shows edit/delete buttons. """
 
     post = Post.query.get_or_404(post_id)
+    tags = post.tags
 
-    return render_template('posts/post_detail.html', post=post)
+    return render_template('posts/post_detail.html', post=post, tags=tags)
 
 
 @app.get("/posts/<int:post_id>/edit")
