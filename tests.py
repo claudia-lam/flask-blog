@@ -405,3 +405,25 @@ class TagViewTestCase(TestCase):
             self.assertIn("test_tag_1", html)
             self.assertIn("test_tag_2", html)
             self.assertIn("test_tag_3", html)
+
+    def test_handle_new_post_with_tags(self):
+        with self.client as c:
+            resp = c.post(f"/users/{self.user_id}/posts/new", data={
+                'title': "A new post title",
+                'content': "some new content",
+                'tag': ["test_tag_1", "test_tag_2"]
+            }, follow_redirects=True)
+
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            # TODO: can we add other tests to check if the tags successfully got added?
+
+    def test_show_post_with_tags(self):
+        with self.client as c:
+            resp = c.get(f"/posts/{self.post_id}")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("test_tag_1", html)
+            self.assertIn("test_tag_2", html)
