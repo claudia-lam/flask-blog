@@ -140,7 +140,7 @@ def handle_new_post(user_id):
     tags = request.form.getlist('tag')
 
     for tag in tags:
-        tag_in_db = Tag.query.filter(Tag.name == tag)
+        tag_in_db = Tag.query.filter(Tag.name == tag).one()
 
         new_post_tag = PostTag(
             post_id=new_post.id,
