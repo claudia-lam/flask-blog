@@ -404,4 +404,4 @@ class TagViewTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("test_tag_1", html)
             self.assertIn("test_tag_2", html)
-            self.assertNotIn("test_tag_3", html)
+            self.assertIn("test_tag_3", html)
