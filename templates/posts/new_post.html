@@ -8,6 +8,14 @@
   <label for="title">Content</label><br>
   <textarea type="text" id="content" name="content"></textarea>
   <input type="submit" id="add" value="Add">
+  <div>
+    {% for post in posts %}
+      {% for tag in post.tags %}
+    <label for={{tag.name}}>{{tag.name}}</label><br>
+    <input type="checkbox" id={{tag.name}} name={{tag.name}} value={{tag.name}}>
+      {% endfor %}
+    {% endfor %}
+  </div>
 </form>
 {% endblock %}
 
