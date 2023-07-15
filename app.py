@@ -120,9 +120,9 @@ def show_new_post_form(user_id):
     """Show form to add a post for that user."""
 
     user = User.query.get_or_404(user_id)
-    posts = user.posts
+    tags = Tag.query.all()
 
-    return render_template('posts/new_post.html', user=user, posts=posts)
+    return render_template('posts/new_post.html', user=user, tags=tags)
 
 
 @app.post("/users/<int:user_id>/posts/new")
