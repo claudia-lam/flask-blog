@@ -427,3 +427,14 @@ class TagViewTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("test_tag_1", html)
             self.assertIn("test_tag_2", html)
+
+    def test_edit_post_with_tags(self):
+        with self.client as c:
+            resp = c.get(f"/posts/{self.post_id}/edit")
+            html = resp.text
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn(
+                """<input type="checkbox" id=test_tag_1 name="tag" value=test_tag_1 checked>""", html)
+            self.assertIn("""<input type="checkbox" id=test_tag_3 name="tag" value=test_tag_3>
+""", html)
