@@ -192,8 +192,10 @@ def handle_edit_post(post_id):
     tags = request.form.getlist('tag')
     # delete all tags related to the post
     post.tags.clear()
-    # assign new tags to the post
-    post.tags.add(tags)
+    for tag in tags:
+        tag_in_db = Tag.query.filter(Tag.name == tag).first()
+        new_tag_post = PostTag(post_id=post.id, tag_id=tag_in_db.id)
+        db.session.add(new_tag_post)
 
     db.session.commit()
 
