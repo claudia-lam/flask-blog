@@ -14,6 +14,16 @@
     type="text"
     id="content"
     name="content">{{post.content}}</textarea>
+
+   {% for tag in post_tags %}
+   <input type="checkbox" id={{tag.name}} name="tag" value={{tag.name}} checked>
+   <label for={{tag.name}}>{{tag.name}}</label><br>
+   {% endfor %}
+   {% for tag in other_tags %}
+   <input type="checkbox" id={{tag.name}} name="tag" value={{tag.name}}>
+   <label for={{tag.name}}>{{tag.name}}</label><br>
+   {% endfor %}
+
   <input type="submit" id="add" value="Edit">
 </form>
 <form action="/users/{{post.user_id}}" method="get">
