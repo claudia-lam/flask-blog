@@ -9,4 +9,9 @@
 <form action="/posts/{{post.id}}/delete" method="post">
   <input type="submit" value="Delete">
 </form>
+<div>
+  {% for tag in tags %}
+  <p>{{tag.name}}</p>
+  {% endfor %}
+</div>
 {% endblock %}
