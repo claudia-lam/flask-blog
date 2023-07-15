@@ -120,9 +120,9 @@ def show_new_post_form(user_id):
     """Show form to add a post for that user."""
 
     user = User.query.get_or_404(user_id)
+    posts = user.posts
 
-    # TODO: add a delete button to html
-    return render_template('posts/new_post.html', user=user)
+    return render_template('posts/new_post.html', user=user, posts=posts)
 
 
 @app.post("/users/<int:user_id>/posts/new")
