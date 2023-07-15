@@ -294,7 +294,7 @@ class TagViewTestCase(TestCase):
         self.post_id = test_post.id
 
         test_tag = Tag(
-            name="test_tag"
+            name="test_tag_1"
         )
         test_tag_2 = Tag(
             name="test_tag_2"
@@ -336,7 +336,7 @@ class TagViewTestCase(TestCase):
             html = resp.text
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<li>test_tag</li>', html)
+            self.assertIn('<li>test_tag_1</li>', html)
             self.assertIn('Add Tag', html)
 
     def test_show_new_tag_form(self):
@@ -364,7 +364,7 @@ class TagViewTestCase(TestCase):
             html = resp.text
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn("test_tag", html)
+            self.assertIn("test_tag_1", html)
             # check if related post is rendered
             self.assertIn("test1_title", html)
 
@@ -386,7 +386,7 @@ class TagViewTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn('an updated tag', html)
-            self.assertNotIn('test_tag', html)
+            self.assertNotIn('test_tag_1', html)
 
     def test_delete_tag(self):
         with self.client as c:
@@ -394,7 +394,7 @@ class TagViewTestCase(TestCase):
             html = resp.text
 
             self.assertEqual(resp.status_code, 200)
-            self.assertNotIn('test_tag', html)
+            self.assertNotIn('test_tag_1', html)
 
     def test_show_new_post_form_with_tags(self):
         with self.client as c:
@@ -402,6 +402,6 @@ class TagViewTestCase(TestCase):
             html = resp.text
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn("test_tag", html)
+            self.assertIn("test_tag_1", html)
             self.assertIn("test_tag_2", html)
             self.assertNotIn("test_tag_3", html)
